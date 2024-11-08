@@ -1,0 +1,77 @@
+/* Container Styling */
+.notifications {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .notifications h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  td {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Unread Notifications Styling */
+  .unread {
+    background-color: #f8d7da; /* Light red for unread notifications */
+    font-weight: bold;
+  }
+  
+  /* Read Notifications Styling */
+  .read {
+    background-color: #d4edda; /* Light green for read notifications */
+    font-weight: normal;
+  }
+  
+  /* Button Styling */
+  button {
+    margin-right: 10px;
+    margin-bottom: 5px; /* Adding margin to the bottom of buttons */
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* Button hover effects */
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Responsive Styling for Smaller Screens */
+  @media (max-width: 768px) {
+    .notifications {
+      padding: 15px;
+    }
+  
+    th, td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  

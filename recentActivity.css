@@ -1,0 +1,36 @@
+/* recentActivity.css */
+.recent-activity {
+    background-color: #34495e; /* Darker background for contrast */
+    color: #ecf0f1; /* Light text color */
+    padding: 1.5rem; /* Padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+    margin-top: 1rem; /* Space above the section */
+  }
+  
+  .recent-activity h2 {
+    font-size: 1.5rem; /* Adjust heading size */
+    margin-bottom: 1rem; /* Space below the heading */
+  }
+  
+  .recent-activity ul {
+    list-style: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .recent-activity li {
+    padding: 0.5rem 0; /* Space between items */
+    border-bottom: 1px solid #ecf0f1; /* Bottom border for separation */
+  }
+  
+  .recent-activity li:last-child {
+    border-bottom: none; /* Remove border from the last item */
+  }
+  
+  .activity-name {
+    font-weight: bold; /* Bold text for the name */
+  }
+  
+  .activity-duration {
+    color: #95a5a6; /* Lighter color for duration */
+  }
+  
