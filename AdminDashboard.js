@@ -89,7 +89,7 @@ const AdminDashboard = () => {
         {activeSection === 'Feedback Management' && <FeedbackManagement/>}
         {activeSection === 'User Management' && <UserManagement/>}
         {activeSection === 'Admin Profile' && <UserProfile user={user}/>}
-        {activeSection === 'Messages received' && <MessagesReceived/>}
+        {activeSection === 'Messages received' && <MessagesReceived user={user}/>}
         {activeSection === 'Active Users' && <ActiveUsers/>} {/* Render Active Users */}
       </div>
     </div>

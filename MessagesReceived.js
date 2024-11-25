@@ -1,97 +1,56 @@
-import React, { useState } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
-import './MessagesReceived.css';
-
+import React, { useState, useEffect } from 'react';
+import './MessagesReceived.css'
 const MessagesReceived = () => {
-  const messages = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', message: 'Great app, I love it!' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', message: 'Needs some improvements.' },
-    { id: 3, name: 'Alice Williams', email: 'alice@example.com', message: 'Fantastic user experience!' },
-    { id: 4, name: 'Bob Martin', email: 'bob@example.com', message: 'Could be faster on mobile.' },
-  ];
-
+  const [messages, setMessages] = useState([]);
   const [replyText, setReplyText] = useState('');
-  const [currentMessageId, setCurrentMessageId] = useState(null);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
 
-  const handleReplyClick = (id) => {
-    setCurrentMessageId(id);
-    setReplyText('');
-  };
+  useEffect(() => {
+    fetch('http://localhost:3003/api/contact')  // This is the updated contact route
+      .then((response) => response.json())
+      .then((data) => setMessages(data))
+      .catch((error) => console.error('Error fetching messages:', error));
+  }, []);
 
-  const handleReplyChange = (e) => {
-    setReplyText(e.target.value);
-  };
-
-  const handleReplySubmit = (e) => {
-    e.preventDefault();
-    if (replyText.trim() === '') {
-      alert('Please enter a reply.');
-      return;
+  const handleReply = async (messageId) => {
+    // Assuming there is a reply route to handle the reply, add a POST request for replies
+    try {
+      await fetch('http://localhost:3003/api/reply', {  // Assuming you have a reply route
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messageId,
+          username: messages.find((msg) => msg._id === messageId).username,
+          replyText,
+        }),
+      });
+      alert('Reply sent successfully!');
+      setReplyText('');
+    } catch (error) {
+      console.error('Error sending reply:', error);
     }
-    alert(`Reply to message ${currentMessageId}: ${replyText}`);
-    setReplyText('');
-    setCurrentMessageId(null);
-  };
-
-  const handleCloseReplyForm = () => {
-    setCurrentMessageId(null); // Close the reply form
   };
 
   return (
     <div className="messages-received">
-      <h2>Messages Received</h2>
-      <hr></hr>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {messages.map((message) => (
-            <tr key={message.id}>
-              <td>{message.name}</td>
-              <td>{message.email}</td>
-              <td>{message.message}</td>
-              <td>
-                <Button variant="primary" onClick={() => handleReplyClick(message.id)}>
-                  Reply
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      {currentMessageId !== null && (
-        <div className="reply-form-container">
-          <div className="reply-form-header">
-            <h4>Reply to User</h4>
-            <Button variant="link" className="close-btn" onClick={handleCloseReplyForm}>
-              <span>&times;</span> {/* Close button */}
-            </Button>
-          </div>
-          <Form onSubmit={handleReplySubmit}>
-            <Form.Group controlId="replyText">
-              <Form.Label>Your Reply</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={replyText}
-                onChange={handleReplyChange}
-                placeholder="Enter your reply here..."
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" className='reply'>
-              Send Reply
-            </Button>
-          </Form>
-        </div>
-      )}
+      <h1>Messages Received</h1>
+      <ul>
+        {messages.map((message) => (
+          <li key={message._id}>
+            <p><strong>From:</strong> {message.username}</p>
+            <p><strong>Message:</strong> {message.message}</p>
+            <textarea
+              value={selectedMessageId === message._id ? replyText : ''}
+              onChange={(e) => {
+                setReplyText(e.target.value);
+                setSelectedMessageId(message._id);
+              }}
+              placeholder="Write your reply..."
+            />
+            <button onClick={() => handleReply(message._id)}>Send Reply</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -1,90 +1,78 @@
 /* FeedbackManagement.css */
 
-/* Container for the Feedback Management section */
+/* General Container */
 .feedback-management-container {
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .feedback-management-container:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #343a40;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .section-title:hover {
-    color: #007bff;
-  }
-  
-  /* Feedback Table Styling */
-  .feedback-table {
-    margin-top: 20px;
-    border-collapse: collapse;
-    width: 100%;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .feedback-table th,
-  .feedback-table td {
-    padding: 12px;
-    text-align: left;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Hover effect for rows */
-  .feedback-table tr:hover {
-    background-color: #f0f8ff;
-    transform: scale(1.02);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .feedback-table th {
-    background-color: #007bff;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .feedback-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Buttons */
-  button {
-    font-size: 1rem;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
-  }
-  
-  button:hover {
-    cursor: pointer;
-    background-color: #0056b3;
-    color: white;
-    transform: translateY(-2px);
-  }
-  
-  button:focus {
-    outline: none;
-  }
-  
-  button:active {
-    transform: translateY(2px);
-  }
-  .star-icon {
-    color: gold;
-    margin-right: 5px;
-  }
-  
-  .feedback-table th, .feedback-table td {
-    text-align: center;
-  }
-  
+  display: flex;
+}
+
+
+/* Main Content Styling */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #ecf0f1;
+}
+
+.main-content h2 {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.feedback-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-table th, .feedback-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.feedback-table th {
+  background-color: #3498db;
+  color: white;
+}
+
+.feedback-table td {
+  color: #2c3e50;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+.feedback-management-container h2{
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #007bff; /* Blue line under the heading */
+  padding-bottom: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.feedback-management-container h2:hover {
+  color: #007bff; /* Blue color on hover */
+  transform: scale(1.05)}

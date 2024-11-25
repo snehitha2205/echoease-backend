@@ -1,21 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import AuthPage from './Login';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthPage, { AuthProvider, ProtectedRoute } from './Login';
 import Dashboard from './Dashboard';
-import { Toaster } from 'react-sonner';
-import AdminDashboard from './AdminDashboard';  // Adjust the path if necessary
+import AdminDashboard from './AdminDashboard';
 
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<AuthPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        {/* Redirect to the home page if the route does not match */}
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+const App = () => {
+    return (
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<AuthPage />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+                    </Route>
+                </Routes>
+            </Router>
+        </AuthProvider>
+    );
+};
 
-      </Routes>
-    </Router>
-  );
-}
+export default App;

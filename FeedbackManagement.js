@@ -1,87 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Button, Form, InputGroup } from 'react-bootstrap';
-import { FaStar, FaRegStar } from 'react-icons/fa';  // Import the stars
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './FeedbackManagement.css';
-
-const sampleFeedbacks = [
-  { id: 1, username: 'john_doe', feedback: 'Great app, very user-friendly!', date: '2024-11-05', rating: 4 },
-  { id: 2, username: 'jane_smith', feedback: 'Needs more features.', date: '2024-11-04', rating: 3 },
-  { id: 3, username: 'alice_williams', feedback: 'Love the design and performance.', date: '2024-11-03', rating: 5 },
-  { id: 4, username: 'bob_martin', feedback: 'Could be faster on mobile.', date: '2024-11-02', rating: 2 },
-];
 
 const FeedbackManagement = () => {
   const [feedbacks, setFeedbacks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    setFeedbacks(sampleFeedbacks);
+    const fetchFeedbacks = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:3003/api/feedback');
+        setFeedbacks(data);
+      } catch (error) {
+        console.error("Error fetching feedbacks", error);
+      }
+    };
+    fetchFeedbacks();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const filteredFeedbacks = feedbacks.filter(feedback => 
-    feedback.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    feedback.feedback.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleDeleteFeedback = (id) => {
-    const updatedFeedbacks = feedbacks.filter((feedback) => feedback.id !== id);
-    setFeedbacks(updatedFeedbacks);
-  };
-
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        stars.push(<FaStar key={i} className="star-icon" />);
-      } else {
-        stars.push(<FaRegStar key={i} className="star-icon" />);
-      }
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3003/api/feedback/${id}`);
+      setFeedbacks(feedbacks.filter(feedback => feedback._id !== id));
+    } catch (error) {
+      console.error("Failed to delete feedback", error);
     }
-    return stars;
   };
+
+  // Filter feedbacks based on the search input
+  const filteredFeedbacks = feedbacks.filter(feedback =>
+    feedback.username.toLowerCase().includes(search.toLowerCase()) ||
+    feedback.feedback.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="feedback-management-container">
-      <h2 className="section-title">Feedback Management</h2>
+      
 
-      <InputGroup className="mb-3">
-        <Form.Control 
-          placeholder="Search Feedback" 
-          value={searchTerm}
-          onChange={handleSearch}
+      {/* Main Content Area */}
+      <div className="main-content">
+        <h2>Feedback Management</h2>
+
+        {/* Search Input */}
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search Feedback..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
-      </InputGroup>
 
-      <Table striped bordered hover responsive className="feedback-table">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Feedback</th>
-            <th>Date</th>
-            <th>Rating</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredFeedbacks.map((feedback) => (
-            <tr key={feedback.id}>
-              <td>{feedback.username}</td>
-              <td>{feedback.feedback}</td>
-              <td>{feedback.date}</td>
-              <td>{renderStars(feedback.rating)}</td> {/* Display stars */}
-              <td>
-                <Button variant="danger" onClick={() => handleDeleteFeedback(feedback.id)}>
-                  Delete
-                </Button>
-              </td>
+        {/* Feedback Table */}
+        <table className="feedback-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Feedback</th>
+              <th>Rating</th>
+              <th>Date</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {filteredFeedbacks.map(feedback => (
+              <tr key={feedback._id}>
+                <td>{feedback.username}</td>
+                <td>{feedback.feedback}</td>
+                <td>{feedback.rating}</td>
+                <td>{new Date(feedback.date).toLocaleDateString()}</td>
+                <td>
+                  <button className="delete-button" onClick={() => handleDelete(feedback._id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

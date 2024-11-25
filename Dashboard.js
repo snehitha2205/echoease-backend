@@ -94,7 +94,7 @@ const Dashboard = () => {
   }, [appliances]);
 
   return (
-    <div className="d-flex">
+    <div className="d-flex parent">
       <div className="d-none d-lg-block sidebar">
         <nav className="flex-column">
           <a href="#" className="nav-link" onClick={(e) => handleNavLinkClick(e, 'Dashboard')}>
@@ -161,19 +161,22 @@ const Dashboard = () => {
       </Offcanvas>
 
       <div className="content">
-        {activeSection === 'Dashboard' && (
-          <div className="appliance-cards">
-            {appliances.map((appliance) => (
-              <ApplianceCard key={appliance.id} appliance={appliance} onToggle={toggleAppliance} />
-            ))}
-          </div>
-        )}
+      {activeSection === 'Dashboard' && (
+  <div className="row">
+    {appliances.map((appliance) => (
+      <div key={appliance.id} className="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <ApplianceCard appliance={appliance} onToggle={toggleAppliance} />
+      </div>
+    ))}
+  </div>
+)}
+
         {activeSection === 'User Profile' && <UserProfile user={user} />}
         {activeSection === 'Feedback' && <Feedback user={user}/>}
         {activeSection === 'Power Consumption' && <PowerConsumption appliances={appliances} />}
         {activeSection === 'Recent Activity' && <RecentActivity activities={recentActivity} />}
-        {activeSection === 'Contact' && <ContactContent />}
-        {activeSection === 'Notifications' && <Notifications/>} 
+        {activeSection === 'Contact' && <ContactContent user={user}/>}
+        {activeSection === 'Notifications' && <Notifications user={user}/>} 
       </div>
     </div>
   );

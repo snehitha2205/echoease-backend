@@ -1,34 +1,77 @@
-/* UserProfile.css */
+/* Import a Google font for a more modern look */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/* Container for the user profile */
 .user-profile-container {
-    background-color: #343a40; /* Matches sidebar color */
-    color: #ffffff;
-    padding: 1rem;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 300px;
-    margin: 1rem auto;
+  background-color: #343a40; /* Matches sidebar color */
+  color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 300px;
+  margin: 1rem auto;
+  opacity: 0; /* Start hidden for animation */
+  animation: fadeIn 0.6s forwards; /* Fade-in animation */
+  font-family: 'Roboto', sans-serif; /* Change font style to Roboto */
+}
+
+/* Avatar styling */
+.user-avatar {
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease; /* Smooth transform on hover */
+}
+
+/* User details section */
+.user-details p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem; /* Increase font size */
+  font-family: 'Roboto', sans-serif; /* Change font style to Roboto */
+  opacity: 0; /* Start hidden for animation */
+  animation: fadeInText 1s ease-out forwards; /* Fade-in effect for text */
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
-  
-  .user-avatar {
-    margin-bottom: 1rem;
+}
+
+/* Animation for fading text in */
+@keyframes fadeInText {
+  to {
+    opacity: 1;
   }
-  
-  .user-details p {
-    margin: 0.5rem 0;
-    font-size: 0.9rem;
-  }
-  
-  .logout-button {
-    background-color: transparent;
-    border-color: #ffffff;
-    color: #ffffff;
-    margin-top: 1rem;
-    width: 100%;
-  }
-  
-  .logout-button:hover {
-    background-color: #495057; /* Slightly darker color on hover */
-    color: #ffffff;
-    border-color: #ffffff;
-  }
-  
+}
+
+/* Hover effect for avatar */
+.user-avatar:hover {
+  transform: scale(1.1); /* Slightly enlarge the avatar */
+}
+
+/* Styling for logout button */
+.logout-button {
+  background-color: transparent;
+  border-color: #ffffff;
+  color: #ffffff;
+  margin-top: 1.5rem;
+  width: 100%;
+  transition: background-color 0.3s, transform 0.3s ease;
+  font-family: 'Roboto', sans-serif; /* Change font style for button */
+  font-size: 1.1rem; /* Increase font size of button */
+}
+
+/* Hover effect for logout button */
+.logout-button:hover {
+  background-color: #495057; /* Slightly darker color */
+  color: #ffffff;
+  border-color: #ffffff;
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Hover effect for logout button (focus/active state) */
+.logout-button:focus,
+.logout-button:active {
+  outline: none; /* Remove outline on click */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Light glowing effect */
+}

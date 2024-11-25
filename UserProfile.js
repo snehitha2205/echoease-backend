@@ -1,32 +1,34 @@
-// UserProfile.js
 import React from 'react';
 import Avatar from 'react-avatar';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import './UserProfile.css'; // Make sure to import the CSS file
 
 const UserProfile = ({ user }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear any stored session or tokens (if applicable)
-    // localStorage.removeItem('authToken'); // Example: Clear auth token from localStorage
+    // Clear the session and token from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
 
     // Navigate to the login page
-    navigate('/login');
+    navigate('/');
   };
+
   if (!user) {
     return <div>Loading...</div>; // Handle case where user data is not yet available
   }
 
   return (
-    <div className="user-profile">
-      <h2>User Profile</h2>
-      <Avatar name={user.username} size="100" round={true} />
-      <p><strong>UserName: </strong> {user.username}</p>
-      <p><strong>Role: </strong> {user.role}</p>
-      <p><strong>Password: {user.password}</strong></p>
-      
-      <Button variant="danger" onClick={handleLogout}>
+    <div className="user-profile-container">
+      <Avatar name={user.username} size="100" round={true} className="user-avatar" />
+      <div className="user-details">
+        <p><strong>UserName: </strong>{user.username}</p>
+        <p><strong>Role: </strong>{user.role}</p>
+        <p><strong>Password: </strong>{user.password}</p>
+      </div>
+      <Button className="logout-button" onClick={handleLogout}>
         Log Out
       </Button>
     </div>

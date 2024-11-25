@@ -1,43 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
-import { users as userData } from './users'; // Import users from users.js
 
 const UserManagement = () => {
-  const [userList, setUserList] = useState(userData); // Initialize with data from users.js
+  const [userList, setUserList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [newUser, setNewUser] = useState({ username: '', password: '', role: '' });
 
-  // Update localStorage whenever userList changes
+  // Fetch users from the backend
   useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(userList));
-  }, [userList]);
+    fetch('http://localhost:3003/api/users')
+      .then((response) => response.json())
+      .then((data) => setUserList(data))
+      .catch((error) => console.error('Error fetching users:', error));
+  }, []);
 
   // Handle adding a new user
-  const handleAddUser = () => {
+  const handleAddUser = async () => {
     if (newUser.username && newUser.password && newUser.role) {
-      const updatedUserList = [...userList, newUser];
-      setUserList(updatedUserList);  // Update state
-      setShowModal(false);
-      setNewUser({ username: '', password: '', role: '' });
+      try {
+        const response = await fetch('http://localhost:3003/api/users/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newUser),
+        });
+  
+        const result = await response.json();
+        if (response.ok) {
+          setUserList((prevUserList) => [...prevUserList, result.user]);  // Update user list
+          setShowModal(false); // Close modal
+          setNewUser({ username: '', password: '', role: '' }); // Reset form
+        } else {
+          alert(result.error || 'Error adding user');
+        }
+      } catch (error) {
+        console.error('Error adding user:', error);
+        alert('Error adding user');
+      }
     } else {
       alert('All fields are required');
     }
   };
+  
 
   // Handle removing a user
-  const handleRemoveUser = (username) => {
-    const updatedUsers = userList.filter(user => user.username !== username);
-    setUserList(updatedUsers);
+  const handleRemoveUser = async (username) => {
+    try {
+      const response = await fetch(`http://localhost:3003/api/users/remove/${username}`, {
+        method: 'DELETE',
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        setUserList((prevUserList) => prevUserList.filter((user) => user.username !== username)); // Update state to remove user
+      } else {
+        alert(result.error || 'Error removing user');
+      }
+    } catch (error) {
+      console.error('Error removing user:', error);
+      alert('Error removing user');
+    }
   };
+  
 
   return (
     <div className="user-management-container">
-      
-      
       <Button variant="primary" onClick={() => setShowModal(true)} className="add-user-btn">
         Add New User
       </Button>
-      
+
       <div className="user-list mt-4">
         <Table striped bordered hover className="user-table">
           <thead>
@@ -49,11 +79,11 @@ const UserManagement = () => {
           </thead>
           <tbody>
             {userList.map((user) => (
-              <tr key={user.username} className="user-table-row">
+              <tr key={user.username}>
                 <td>{user.username}</td>
                 <td>{user.role}</td>
                 <td>
-                  <Button variant="danger" onClick={() => handleRemoveUser(user.username)} className="remove-btn">
+                  <Button variant="danger" onClick={() => handleRemoveUser(user.username)}>
                     Remove
                   </Button>
                 </td>
@@ -105,10 +135,10 @@ const UserManagement = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)} className="modal-close-btn">
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAddUser} className="modal-save-btn">
+          <Button variant="primary" onClick={handleAddUser}>
             Add User
           </Button>
         </Modal.Footer>

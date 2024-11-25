@@ -1,27 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
-import './Notifications.css'; // Optional: You can create custom styles for this component
+import './Notifications.css';
 
-const Notifications = () => {
-  // Sample notifications with replies from the admin
-  const [notifications, setNotifications] = useState([
-    { id: 1, title: 'Reply from Admin', message: 'Your issue with the app performance has been resolved.', timestamp: '2024-11-05 12:00', read: false },
-    { id: 2, title: 'Reply from Admin', message: 'We have added new features to the app as per your request.', timestamp: '2024-11-04 10:30', read: false },
-    { id: 3, title: 'Reply from Admin', message: 'We are investigating the mobile speed issue you reported.', timestamp: '2024-11-03 09:15', read: false },
-    { id: 4, title: 'Reply from Admin', message: 'Thank you for your feedback on the new design!', timestamp: '2024-11-02 16:20', read: true },
-  ]);
+const Notifications = ({ user }) => {
+  const [notifications, setNotifications] = useState([]);
 
-  const handleMarkAsRead = (id) => {
-    const updatedNotifications = notifications.map((notification) =>
-      notification.id === id ? { ...notification, read: true } : notification
-    );
-    setNotifications(updatedNotifications);
+  // Fetch replies from the database that match the user's username
+  useEffect(() => {
+    const fetchReplies = async () => {
+      try {
+        const response = await fetch(`http://localhost:3003/api/reply?username=${user.username}`);
+        const data = await response.json();
+        setNotifications(data);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchReplies();
+  }, [user.username]);
+
+  
+  const handleDeleteNotification = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3003/api/reply/${id}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        const updatedNotifications = notifications.filter((notification) => notification._id !== id);
+        setNotifications(updatedNotifications);
+      } else {
+        console.error('Failed to delete notification');
+      }
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+    }
   };
-
-  const handleDeleteNotification = (id) => {
-    const updatedNotifications = notifications.filter((notification) => notification.id !== id);
-    setNotifications(updatedNotifications);
-  };
+  
 
   return (
     <div className="notifications">
@@ -38,21 +54,21 @@ const Notifications = () => {
         </thead>
         <tbody>
           {notifications.map((notification) => (
-            <tr key={notification.id} className={notification.read ? 'read' : 'unread'}>
-              <td>{notification.title}</td>
-              <td>{notification.message}</td>
-              <td>{notification.timestamp}</td>
+            <tr key={notification._id} className={notification.read ? 'read' : 'unread'}>
+              <td>Reply from Admin</td>
+              <td>{notification.replyText}</td>
+              <td>{new Date(notification.repliedAt).toLocaleString()}</td>
               <td>
-                <Button 
+                {/* <Button 
                   variant="success" 
-                  onClick={() => handleMarkAsRead(notification.id)} 
+                  onClick={() => handleMarkAsRead(notification._id)} 
                   disabled={notification.read}
                 >
                   Mark as Read
-                </Button>
+                </Button> */}
                 <Button 
                   variant="danger" 
-                  onClick={() => handleDeleteNotification(notification.id)} 
+                  onClick={() => handleDeleteNotification(notification._id)} 
                   className="ms-2"
                 >
                   Delete
