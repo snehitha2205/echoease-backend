@@ -4,6 +4,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for scaling and shadow */
     background-color: #ecf0f1; /* Light background to contrast with sidebar */
+    
   }
   
   .card:hover {
@@ -40,4 +41,7 @@
     outline: none; /* Remove outline on focus */
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5); /* Shadow effect on focus */
   }
-  
+  .card-text{
+    color: black;
+    margin: 0;
+  }

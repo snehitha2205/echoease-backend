@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
+import './UserManagement.css';  // Import the CSS file for styling
 
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
@@ -23,7 +24,7 @@ const UserManagement = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newUser),
         });
-  
+
         const result = await response.json();
         if (response.ok) {
           setUserList((prevUserList) => [...prevUserList, result.user]);  // Update user list
@@ -40,7 +41,6 @@ const UserManagement = () => {
       alert('All fields are required');
     }
   };
-  
 
   // Handle removing a user
   const handleRemoveUser = async (username) => {
@@ -48,7 +48,7 @@ const UserManagement = () => {
       const response = await fetch(`http://localhost:3003/api/users/remove/${username}`, {
         method: 'DELETE',
       });
-  
+
       const result = await response.json();
       if (response.ok) {
         setUserList((prevUserList) => prevUserList.filter((user) => user.username !== username)); // Update state to remove user
@@ -60,15 +60,11 @@ const UserManagement = () => {
       alert('Error removing user');
     }
   };
-  
 
   return (
     <div className="user-management-container">
-      <Button variant="primary" onClick={() => setShowModal(true)} className="add-user-btn">
-        Add New User
-      </Button>
-
       <div className="user-list mt-4">
+        <h2>User Management</h2>
         <Table striped bordered hover className="user-table">
           <thead>
             <tr>
@@ -92,6 +88,11 @@ const UserManagement = () => {
           </tbody>
         </Table>
       </div>
+
+      {/* Add New User Button */}
+      <Button variant="primary" onClick={() => setShowModal(true)} className="add-user-btn">
+        Add New User
+      </Button>
 
       {/* Modal to Add New User */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>

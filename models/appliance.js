@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
-const applianceSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  status: { type: Boolean, default: false },
-  activeTime: { type: Number, default: 0 },
-  image: { type: String, required: true }, // URL or path for the image
+const applianceStatusSchema = new mongoose.Schema({
+  id: { type:Number, ref: 'Appliance', required: true },
+  status: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Appliance', applianceSchema);
+module.exports = mongoose.model('ApplianceStatus', applianceStatusSchema);

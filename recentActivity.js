@@ -9,8 +9,8 @@ const RecentActivity = ({ activities }) => {
       <ul>
         {activities.map((activity, index) => (
           <li key={index}>
-            <span className="activity-name">{activity.name}: </span>
-            <span className="activity-duration">{activity.duration}s active</span>
+            <span className="activity-name">{activity.name} </span>
+            {/* <span className="activity-duration">{activity.duration}s active</span> */}
           </li>
         ))}
       </ul>

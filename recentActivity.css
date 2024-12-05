@@ -1,36 +1,72 @@
 /* recentActivity.css */
 .recent-activity {
-    background-color: #34495e; /* Darker background for contrast */
-    color: #ecf0f1; /* Light text color */
-    padding: 1.5rem; /* Padding for spacing */
-    border-radius: 10px; /* Rounded corners */
-    margin-top: 1rem; /* Space above the section */
+  background-color: #ecf0f1; /* Light background for contrast */
+  border-radius: 15px;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Deeper shadow for more dimension */
+  background: linear-gradient(135deg, #ffffff, #ecf0f1); /* Subtle gradient background */
+}
+
+.recent-activity h2 {
+  font-size: 32px;
+  color: #2c3e50; /* Main color for the header */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.recent-activity ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.recent-activity li {
+  background-color: #ffffff; /* Pure white for list items */
+  margin: 15px 0;
+  padding: 18px;
+  border-radius: 10px; /* Rounded corners for list items */
+  border-left: 6px solid #2c3e50; /* Left border in the given color */
+  font-size: 18px;
+  color: #333333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.recent-activity li:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  background-color: #f9f9f9; /* Light gray hover background */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+}
+
+.activity-name {
+  font-weight: bold;
+  color: #2c3e50; /* Color of the activity name */
+}
+
+.activity-duration {
+  font-size: 14px;
+  color: #7f8c8d; /* Lighter color for duration */
+  font-style: italic;
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .recent-activity {
+    padding: 25px;
+    margin: 20px;
   }
-  
+
   .recent-activity h2 {
-    font-size: 1.5rem; /* Adjust heading size */
-    margin-bottom: 1rem; /* Space below the heading */
+    font-size: 28px;
   }
-  
-  .recent-activity ul {
-    list-style: none; /* Remove default list styles */
-    padding: 0; /* Remove default padding */
-  }
-  
+
   .recent-activity li {
-    padding: 0.5rem 0; /* Space between items */
-    border-bottom: 1px solid #ecf0f1; /* Bottom border for separation */
+    font-size: 16px;
+    padding: 15px;
   }
-  
-  .recent-activity li:last-child {
-    border-bottom: none; /* Remove border from the last item */
-  }
-  
-  .activity-name {
-    font-weight: bold; /* Bold text for the name */
-  }
-  
-  .activity-duration {
-    color: #95a5a6; /* Lighter color for duration */
-  }
-  
+}

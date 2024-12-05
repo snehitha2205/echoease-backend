@@ -1,40 +1,45 @@
-/* Import a Google font for a more modern look */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-
 /* Container for the user profile */
 .user-profile-container {
-  background-color: #343a40; /* Matches sidebar color */
-  color: #ffffff;
+  background-color:  #2c3e50; /* Dark background, matching sidebar */
+  color: #ecf0f1; /* Light text color for contrast */
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
-  max-width: 300px;
-  margin: 1rem auto;
-  opacity: 0; /* Start hidden for animation */
-  animation: fadeIn 0.6s forwards; /* Fade-in animation */
-  font-family: 'Roboto', sans-serif; /* Change font style to Roboto */
+  max-width: 250px; /* Limit width for better fit within sidebar */
+  margin: 0 auto 1.5rem; /* Center profile container and give space below */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  font-family: 'Roboto', sans-serif; /* Consistent font style */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for profile container */
+.user-profile-container:hover {
+  transform: scale(1.05); /* Slightly enlarge profile on hover */
 }
 
 /* Avatar styling */
 .user-avatar {
-  margin-bottom: 1.5rem;
-  transition: transform 0.3s ease; /* Smooth transform on hover */
+  margin-bottom: 1rem;
+  border-radius: 50%; /* Circular avatar */
+  /* border: 3px solid #ecf0f1; */
+  width: 80px;
+  height: 80px;
+  object-fit: cover; /* Ensures the avatar image fits inside the circle */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for avatar */
+.user-avatar:hover {
+  transform: scale(1.1); /* Slightly enlarge the avatar on hover */
 }
 
 /* User details section */
 .user-details p {
   margin: 0.5rem 0;
-  font-size: 1.2rem; /* Increase font size */
-  font-family: 'Roboto', sans-serif; /* Change font style to Roboto */
+  font-size: 1.1rem; /* Slightly larger font size */
+  font-family: 'Roboto', sans-serif; /* Consistent font */
   opacity: 0; /* Start hidden for animation */
   animation: fadeInText 1s ease-out forwards; /* Fade-in effect for text */
-}
-
-/* Animation for fade-in effect */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
 }
 
 /* Animation for fading text in */
@@ -44,29 +49,27 @@
   }
 }
 
-/* Hover effect for avatar */
-.user-avatar:hover {
-  transform: scale(1.1); /* Slightly enlarge the avatar */
-}
-
 /* Styling for logout button */
 .logout-button {
   background-color: transparent;
-  border-color: #ffffff;
-  color: #ffffff;
+  border-color: #ecf0f1; /* Light border */
+  color: #ecf0f1; /* Light text color */
   margin-top: 1.5rem;
   width: 100%;
-  transition: background-color 0.3s, transform 0.3s ease;
-  font-family: 'Roboto', sans-serif; /* Change font style for button */
+  padding: 0.8rem;
+  border-radius: 5px;
   font-size: 1.1rem; /* Increase font size of button */
+  text-align: center;
+  font-family: 'Roboto', sans-serif; /* Consistent font style */
+  transition: background-color 0.3s, transform 0.3s ease; /* Smooth transitions */
 }
 
 /* Hover effect for logout button */
 .logout-button:hover {
-  background-color: #495057; /* Slightly darker color */
+  background-color: #495057; /* Darker background on hover */
   color: #ffffff;
   border-color: #ffffff;
-  transform: scale(1.05); /* Slightly enlarge the button */
+  transform: scale(1.05); /* Slight enlarge on hover */
 }
 
 /* Hover effect for logout button (focus/active state) */
@@ -74,4 +77,10 @@
 .logout-button:active {
   outline: none; /* Remove outline on click */
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Light glowing effect */
+}
+
+/* Sidebar specific adjustments */
+.sidebar .user-profile-container {
+  max-width: 100%; /* Ensure profile container stretches inside the sidebar */
+  margin-bottom: 2rem; /* Add space between the profile and other sidebar content */
 }

@@ -145,7 +145,7 @@ const LoginForm = () => {
 
     return (
         <div className="form-content">
-            <h2>Login</h2>
+            {/* <h2>Login</h2> */}
             <form onSubmit={handleLogin}>
                 <div className="input-group">
                     <input

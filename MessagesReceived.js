@@ -33,7 +33,7 @@ const MessagesReceived = () => {
 
   return (
     <div className="messages-received">
-      <h1>Messages Received</h1>
+      <h1 className='messages'>Messages Received</h1>
       <ul>
         {messages.map((message) => (
           <li key={message._id}>
